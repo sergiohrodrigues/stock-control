@@ -13,6 +13,7 @@ import { Subject, takeUntil } from 'rxjs';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
+
 export class HomeComponent implements OnDestroy {
   private destroy$ = new Subject<void>();
   loginCard = true;
