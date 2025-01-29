@@ -1,5 +1,5 @@
 <div>
-  <form [formGroup]="addProductFOrm" (ngSubmit)="handleSubmitAddProduct()">
+  <form [formGroup]="addProductForm" (ngSubmit)="handleSubmitAddProduct()">
     <div class="card flex flex-column md:flex-column gap-3">
       <!-- Nome do produto -->
       <input pInputText placeholder="Nome" formControlName="name">
@@ -25,7 +25,7 @@
 
       <div class="flex flex-row justify-content-center align-content-center align-items-center m-1">
         <p-button
-          [disabled]="!addProductFOrm.valid"
+          [disabled]="!addProductForm.valid"
           type="submit"
           label="Concluir"
         ></p-button>
