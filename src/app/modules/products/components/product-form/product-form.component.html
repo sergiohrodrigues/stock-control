@@ -42,6 +42,18 @@
       <!-- Nome do produto -->
       <input pInputText placeholder="Nome" formControlName="name">
 
+      <!-- Categoria do produto -->
+      <div *ngIf="renderDropdown">
+        <p-dropdown
+          styleClass="w-full"
+          [options]="categoriesData"
+          [(ngModel)]="selectCategory"
+          optionLabel="name"
+          optionValue="id"
+          formControlName="category_id"
+        ></p-dropdown>
+      </div>
+
       <!-- Preço do produto -->
       <input pInputText placeholder="Preço" formControlName="price">
 
