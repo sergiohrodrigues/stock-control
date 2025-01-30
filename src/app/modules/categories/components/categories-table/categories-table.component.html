@@ -62,13 +62,14 @@
                   tooltipPosition="top"
                   class="p-button-rounded p-button-warning"
                   ></button>
-                  <button
+                <button
                   pButton
                   pRipple
                   icon="pi pi-trash"
                   pTooltip="Remover categoria"
                   tooltipPosition="top"
                   class="p-button-rounded p-button-danger"
+                  (click)="handleDeleteCategoryEvent(category.id, category.name)"
                 ></button>
               </div>
             </td>
