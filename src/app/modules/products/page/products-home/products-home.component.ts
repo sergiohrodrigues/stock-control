@@ -115,6 +115,7 @@ export class ProductsHomeComponent implements OnDestroy, OnInit {
               life: 2500
             })
           }
+          this.getApiProductsDatas()
         },
         error: (err) => {
           console.log(err)
@@ -128,7 +129,6 @@ export class ProductsHomeComponent implements OnDestroy, OnInit {
         }
       }))
 
-      this.getApiProductsDatas()
     }
   }
 
