@@ -1,0 +1,13 @@
+<form [formGroup]="categoryForm" (ngSubmit)="handleSubmitAddCategory()">
+  <div class="card flex flex-column md:flex-column gap-3">
+    <!-- Nome do produto -->
+    <input pInputText placeholder="Nome da categoria" formControlName="name">
+  </div>
+  <div class="flex flex-row justify-content-start align-content-center align-items-center mt-3">
+    <p-button
+      [disabled]="!categoryForm.valid"
+      type="submit"
+      label="Adicionar"
+    ></p-button>
+  </div>
+</form>
