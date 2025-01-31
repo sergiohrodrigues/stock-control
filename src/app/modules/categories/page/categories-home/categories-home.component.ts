@@ -18,7 +18,7 @@ import { GetAllProductsResponse } from 'src/app/models/interfaces/products/respo
 })
 export class CategoriesHomeComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<void> = new Subject();
-   private ref!: DynamicDialogRef;
+  private ref!: DynamicDialogRef;
   public categoriesDatas: Array<GetCategoriesResponse> = [];
   public productsData: Array<GetAllProductsResponse> = [];
 
