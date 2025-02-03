@@ -73,3 +73,34 @@
     </div>
   </form>
  </div>
+
+ <!-- FORMULÁRIO DE EFETUAR VENDA -->
+  <div *ngIf="productAction.event.action === saleProductAction">
+    <form [formGroup]="saleProductForm" (ngSubmit)="handleSubmitSaleProduct()">
+
+      <!-- Categoria do produto -->
+        <div class="card flex flex-column md:flex-column gap-3">
+          <p-dropdown
+          [options]="productsDatas"
+          [(ngModel)]="saleProductSelected"
+          styleClass="w-full h-150px"
+          optionLabel="name"
+          optionValue="id"
+          placeholder="Selecione um produto"
+          formControlName="product_id"
+          ></p-dropdown>
+        </div>
+
+        <!-- Nome do produto -->
+        <input type="number" pInputText placeholder="Quantidade" formControlName="amount" class="mt-3">
+
+
+        <div class="flex flex-row justify-content-center align-content-center align-items-center">
+          <p-button
+            [disabled]="!saleProductForm.valid"
+            type="submit"
+            label="Concluir"
+          ></p-button>
+        </div>
+    </form>
+  </div>
