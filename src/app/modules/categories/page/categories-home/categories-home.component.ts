@@ -24,7 +24,7 @@ export class CategoriesHomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getAllCategories();
-    // this.getAllProducts();
+    this.getAllProducts();
   }
 
   constructor(
@@ -58,18 +58,18 @@ export class CategoriesHomeComponent implements OnInit, OnDestroy {
       })
   }
 
-  // getAllProducts(){
-  //   this.productsService.getAllProduts()
-  //     .pipe(takeUntil(this.destroy$))
-  //     .subscribe({
-  //       next: (response) => {
-  //         this.productsData = response
-  //       },
-  //       error: (err) => {
-  //         console.log(err)
-  //       }
-  //     })
-  // }
+  getAllProducts(){
+    this.productsService.getAllProduts()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+          this.productsData = response
+        },
+        error: (err) => {
+          console.log(err)
+        }
+      })
+  }
 
   handleDeleteCategoryAction(event: DeleteCategoryAction): void {
     if(event){

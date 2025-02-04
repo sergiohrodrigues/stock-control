@@ -41,8 +41,8 @@ export class HomeComponent implements OnDestroy, AfterViewInit {
   ) {}
 
   ngAfterViewInit(): void {
-    this.emailInputRef.nativeElement.value = 'seu email aki';
-    this.passwordInputRef.nativeElement.value = 'seu password aki';
+    // this.emailInputRef.nativeElement.value = 'seu email aki';
+    // this.passwordInputRef.nativeElement.value = 'seu password aki';
 
     console.log('EMAIL INPUT =>', this.emailInputRef.nativeElement.value)
     console.log('PASSWORD INPUT =>', this.passwordInputRef.nativeElement.value)
