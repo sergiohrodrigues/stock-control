@@ -60,7 +60,7 @@ export class HomeComponent implements OnDestroy, AfterViewInit {
             this.cookieService.set('USER_INFO', response?.token);
             this.loginForm.reset();
             this.router.navigate(['/dashboard']);
-
+            this.messageService.clear();
             this.messageService.add({
               severity: 'success',
               summary: 'Sucesso',
@@ -70,6 +70,7 @@ export class HomeComponent implements OnDestroy, AfterViewInit {
           }
         },
         error: (err) => {
+          this.messageService.clear();
           this.messageService.add({
             severity: 'error',
             summary: 'Erro',
@@ -91,6 +92,7 @@ export class HomeComponent implements OnDestroy, AfterViewInit {
             if (response) {
               this.signupForm.reset();
               this.loginCard = true;
+              this.messageService.clear();
               this.messageService.add({
                 severity: 'success',
                 summary: 'Sucesso',
@@ -100,6 +102,7 @@ export class HomeComponent implements OnDestroy, AfterViewInit {
             }
           },
           error: (err) => {
+            this.messageService.clear();
             this.messageService.add({
               severity: 'error',
               summary: 'Erro',

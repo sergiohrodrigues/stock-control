@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { ProductEvent } from 'src/app/models/enums/products/ProductEvent';
 import { GetCategoriesResponse } from 'src/app/models/interfaces/categories/response/GetCategoriesResponse';
@@ -40,7 +40,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     price: ['', Validators.required],
     description: ['', Validators.required],
     category_id: ['', Validators.required],
-    amount: [0, Validators.required]
+    amount: ['', Validators.required]
   })
 
   public editProductForm = this.formBuilder.group({
@@ -70,12 +70,11 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     private messageService: MessageService,
     private router: Router,
     public ref: DynamicDialogConfig,
+    public refDialog: DynamicDialogRef,
   ){}
 
   ngOnInit(): void {
     this.productAction = this.ref.data;
-
-    console.log("prodctAction", this.productAction)
 
     this.productAction.event.action === this.saleProductAction && this.getProductDatas();
 
@@ -118,16 +117,19 @@ export class ProductFormComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (response) => {
             if(response){
+              this.messageService.clear();
               this.messageService.add({
                 severity: 'success',
                 summary: 'Sucesso',
                 detail: 'Produto criado com sucesso!',
                 life: 2500
               })
+              this.refDialog.close();
             }
           },
           error: (err) => {
             console.log(err)
+            this.messageService.clear();
             this.messageService.add({
               severity: 'error',
               summary: 'Erro',
@@ -157,6 +159,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (response) => {
+            this.messageService.clear();
             this.messageService.add({
               severity: 'success',
               summary: 'Sucesso',
@@ -164,9 +167,11 @@ export class ProductFormComponent implements OnInit, OnDestroy {
               life: 2500
             })
             this.editProductForm.reset();
+            this.refDialog.close();
           },
           error: (err) => {
             console.log(err)
+            this.messageService.clear();
             this.messageService.add({
               severity: 'error',
               summary: 'Erro',
@@ -214,6 +219,22 @@ export class ProductFormComponent implements OnInit, OnDestroy {
 
   handleSubmitSaleProduct(): void {
     if(this.saleProductForm.value && this.saleProductForm.valid){
+
+      const amountProduct = this.productsDatas.find(prod => prod.id === this.saleProductForm.value.product_id);
+
+      if(amountProduct && amountProduct?.amount < Number(this.saleProductForm.value.amount)){
+
+        this.messageService.clear();
+        this.messageService.clear();
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Quantidade inexistente, por favor insira uma quatidade válida.',
+          life: 5000
+        })
+        return;
+      }
+
       const requestDatas : SaleProductRequest = {
         amount: Number(this.saleProductForm.value.amount),
         product_id: this.saleProductForm.value.product_id as string
@@ -226,6 +247,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
             if(response){
               this.saleProductForm.reset();
               this.getProductDatas()
+              this.messageService.clear();
               this.messageService.add({
                 severity: 'success',
                 summary: 'Sucesso',
@@ -239,6 +261,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
           error: (err) => {
             console.log(err)
             this.saleProductForm.reset();
+            this.messageService.clear();
             this.messageService.add({
               severity: 'error',
               summary: 'Erro',

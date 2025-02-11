@@ -47,6 +47,7 @@ export class CategoriesHomeComponent implements OnInit, OnDestroy {
         },
         error: (err) => {
           console.log(err)
+          this.messageService.clear();
           this.messageService.add({
             severity: 'error',
             summary: 'Erro',
@@ -109,13 +110,13 @@ export class CategoriesHomeComponent implements OnInit, OnDestroy {
     const categoryExistent = this.productsData.filter(prodct => prodct.category.id === category_id);
 
     if(categoryExistent.length > 0){
+      this.messageService.clear();
       this.messageService.add({
         severity: 'error',
         summary: 'Erro',
         detail: 'Existem produtos com essa categoria, então não é possivel remove-lá',
         life: 5000
       })
-      this.ref.close();
       return
     }
 
@@ -124,6 +125,7 @@ export class CategoriesHomeComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (response) => {
+            this.messageService.clear();
             this.messageService.add({
               severity: 'success',
               summary: 'Suceso',
@@ -134,6 +136,7 @@ export class CategoriesHomeComponent implements OnInit, OnDestroy {
           },
           error: (err) => {
             console.log(err);
+            this.messageService.clear();
             this.messageService.add({
               severity: 'error',
               summary: 'Erro',

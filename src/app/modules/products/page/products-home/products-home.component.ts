@@ -53,6 +53,7 @@ export class ProductsHomeComponent implements OnDestroy, OnInit {
         },
         error: (err) => {
           console.log(err)
+          this.messageService.clear();
           this.messageService.add({
             severity: 'error',
             summary: 'Erro',
@@ -109,6 +110,7 @@ export class ProductsHomeComponent implements OnDestroy, OnInit {
       .subscribe(({
         next: (response) => {
           if(response){
+            this.messageService.clear();
             this.messageService.add({
               severity: 'success',
               summary: 'Sucesso',
@@ -120,6 +122,7 @@ export class ProductsHomeComponent implements OnDestroy, OnInit {
         },
         error: (err) => {
           console.log(err)
+          this.messageService.clear();
           this.messageService.add({
             severity: 'error',
             summary: 'Erro',

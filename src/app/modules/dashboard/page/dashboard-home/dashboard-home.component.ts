@@ -42,6 +42,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
       },
       error: (err) => {
         console.log(err)
+        this.messageService.clear();
         this.messageService.add({
           severity: 'error',
           summary: 'Erro',

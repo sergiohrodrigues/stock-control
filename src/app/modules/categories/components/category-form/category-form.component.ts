@@ -29,6 +29,7 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
 
   constructor(
     public ref: DynamicDialogConfig,
+    public refDialog: DynamicDialogRef,
     private formBuilder: FormBuilder,
     private categorieService: CategoriesService,
     private messageService: MessageService
@@ -64,16 +65,19 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (response) => {
             this.categoryForm.reset();
+            this.messageService.clear();
             this.messageService.add({
               severity: 'success',
               summary: "Sucesso",
               detail: 'Categoria editada com sucesso!',
               life: 3000
             })
+            this.refDialog.close();
           },
           error: (err) => {
             console.log(err)
             this.categoryForm.reset();
+            this.messageService.clear();
             this.messageService.add({
               severity: 'error',
               summary: "Erro",
@@ -98,18 +102,21 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
           next: (response) => {
             if (response) {
               // this.addProduct.emit({ action: this.addCategory })
+              this.messageService.clear();
               this.messageService.add({
                 severity: 'success',
                 summary: "Sucesso",
                 detail: 'Categoria criada com sucesso!',
                 life: 3000
               })
+              this.refDialog.close();
               this.categoryForm.reset();
             }
           },
           error: (err) => {
             console.log(err)
             this.categoryForm.reset();
+            this.messageService.clear();
             this.messageService.add({
               severity: 'error',
               summary: "Erro",
