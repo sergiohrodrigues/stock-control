@@ -7,6 +7,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ProductEvent } from 'src/app/models/enums/products/ProductEvent';
 import { GetCategoriesResponse } from 'src/app/models/interfaces/categories/response/GetCategoriesResponse';
 import { EventAction } from 'src/app/models/interfaces/products/event/EventAction';
+import { SaleProduct } from 'src/app/models/interfaces/products/event/SaleProduct';
 import { CreateProductRequest } from 'src/app/models/interfaces/products/request/CreateProductRequest';
 import { EditProductRequest } from 'src/app/models/interfaces/products/request/EditProductRequest';
 import { SaleProductRequest } from 'src/app/models/interfaces/products/request/SaleProductRequest';
@@ -235,6 +236,18 @@ export class ProductFormComponent implements OnInit, OnDestroy {
         return;
       }
 
+      const existingProducts = JSON.parse(localStorage.getItem("SaleProducts") || "[]");
+
+      const productSaleWithQuantity: SaleProduct = {
+        name: amountProduct?.name as string,
+        price: amountProduct?.price as string,
+        quantity: this.saleProductForm.value.amount as string
+      };
+
+      existingProducts.push(productSaleWithQuantity);
+
+      localStorage.setItem("SaleProducts", JSON.stringify(existingProducts));
+
       const requestDatas : SaleProductRequest = {
         amount: Number(this.saleProductForm.value.amount),
         product_id: this.saleProductForm.value.product_id as string
@@ -245,8 +258,6 @@ export class ProductFormComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (response) => {
             if(response){
-              this.saleProductForm.reset();
-              this.getProductDatas()
               this.messageService.clear();
               this.messageService.add({
                 severity: 'success',
@@ -254,8 +265,9 @@ export class ProductFormComponent implements OnInit, OnDestroy {
                 detail: 'Produto comprado com sucesso!',
                 life: 2500
               })
+              this.refDialog.close()
               this.router.navigate(['/dashboard'])
-
+              this.getProductDatas()
             }
           },
           error: (err) => {

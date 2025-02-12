@@ -1,0 +1,32 @@
+<app-toolbar-navigation></app-toolbar-navigation>
+
+<p-card styleClass="shadow-3 m-5 text-indigo-800" header="Histórico de Vendas">
+  <p-table
+    #salesTable
+    [value]="productsSale"
+    [tableStyle]="{'min-width': '60rem'}"
+    [paginator]="false"
+    [responsive]="true"
+    [globalFilterFields]="['name', 'amount']"
+    [rowHover]="true"
+    [showCurrentPageReport]="true"
+    dataKey="id"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Produto</th>
+        <th>Valor Unitário</th>
+        <th>Quantidade</th>
+        <th>Valor total</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td>{{product.name}}</td>
+        <td>{{product.price | currency:'BRL'}}</td>
+        <td>{{product.quantity}}</td>
+        <td>{{product.price * product.quantity | currency:'BRL'}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>
